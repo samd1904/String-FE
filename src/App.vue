@@ -1,32 +1,28 @@
 
 <template>
-  <div id="app">
-    <ChatWindow />
+  <div>
+    <component :is="activeComp" v-model="activeComp" @start-chatting="startChatting"></component>
   </div>
 </template>
 
 <script>
-import ChatWindow from './components/chatWindow.vue';
-import { socket } from '@/socket';
-
-export default {
-  name: 'App',
-  components: {
-    ChatWindow
-  },
-  mounted() {
-    socket.connect();  // Ensure this is correctly placed
+  export default {
+    name: 'App',
+    data() {
+      return {
+        activeComp: 'home'
+      }
+    },
+    emits:[
+      "start-chatting"
+    ],
+    methods: {
+      startChatting(){
+        this.activeComp="chat-window" 
+      }
+    },
   }
-}
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>

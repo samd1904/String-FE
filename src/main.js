@@ -1,6 +1,8 @@
-import './assets/main.css'
-
 import { createApp } from 'vue'
 import App from './App.vue'
-
-createApp(App).mount('#app')
+import Home from './components/Home.vue';
+import chatWindow from './components/chatWindow.vue'
+const app = createApp(App);
+app.component('home', Home);
+app.component('chat-window', chatWindow);
+app.mount('#app')
