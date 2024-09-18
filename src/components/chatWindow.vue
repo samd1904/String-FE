@@ -1,15 +1,20 @@
 <template>
-  <ul id="messages">
-    <li v-for="(event, index) in chatEvents" :key="index">{{ event }}</li>
-  </ul>
-  <form id="form" v-on:submit.prevent> 
-    <input id="input" placeholder="Your message here!" v-model="msg" />
-    <button type="submit"  v-on:click="sendMessage">Send</button>
-  </form>
+  <div>
+    <h4>{{ roomText }}</h4>
+    <h4>{{ connectionText }}</h4>
+    <ul id="messages">
+      <li v-for="(event, index) in chatEvents" :key="index">{{ event }}</li>
+    </ul>
+    <form id="form" v-on:submit.prevent>
+      <input id="input" placeholder="Your message here!" v-model="msg" />
+      <button type="submit" v-on:click="sendMessage">Send</button>
+    </form>
+  </div>
+
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { state, socket } from '@/socket.js';
 
 export default {
@@ -18,22 +23,33 @@ export default {
   data() {
     return {
       msg: "",
-      connected: state.connected,
-      chatEvents: state.chatEvents,
+    }
+  },
+
+  computed: {
+    roomText() {
+      return `Room Id: ${state.roomId}`;
+    },
+    connectionText() {
+      return `Connected: ${state.connected}`;
+    },
+    chatEvents() {
+      return state.chatEvents;
     }
   },
 
   methods: {
     sendMessage() {
+      console.log("send pressed")
       if (this.msg.trim()) {
         // Emit the chat message
-        socket.emit('chat message', this.msg);
+        socket.emit('chat message', { msg: this.msg, to: state.roomId });
         // Clear the input field after sending the message
         this.msg = '';
       }
     }
   }
-};
+}
 </script>
 
 <style>
@@ -84,7 +100,7 @@ body {
   padding: 0;
 }
 
-#messages>li {
-  padding: 0.5rem 1rem;
-}
+/*#messages>li {*/
+/*  padding: 0.5rem 1rem;*/
+/*}*/
 </style>
