@@ -8,7 +8,7 @@ export const state = reactive({
 });
 
 // "undefined" means the URL will be computed from the `window.location` object
-const URL = "http://localhost:3000/";
+const URL = process.env.BE-HOST-URL;
 
 export const socket = io(URL, {autoConnect: false});
 
