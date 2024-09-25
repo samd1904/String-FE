@@ -1,14 +1,16 @@
 import { reactive } from "vue";
 import { io } from "socket.io-client";
 
+
+
 export const state = reactive({
   connected: false,
   chatEvents: [],
   roomId: "",
 });
 
-// "undefined" means the URL will be computed from the `window.location` object
-const URL = process.env.BE_HOST_URL;
+const URL = import.meta.env.VITE_BE_HOST_URL;
+console.log(URL)
 
 export const socket = io(URL, {autoConnect: false});
 
