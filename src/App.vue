@@ -1,6 +1,6 @@
 <template>
   <div>
-    <component :is="activeComp" v-model="activeComp" @start-chatting="startChatting"></component>
+    <component :is="activeComp" v-model="activeComp" @start-chatting="startChatting" v-bind:username="username"></component>
   </div>
 </template>
 
@@ -11,7 +11,8 @@ export default {
   name: 'App',
   data() {
     return {
-      activeComp: 'home'
+      activeComp: 'home',
+      username: ""
     }
   },
   emits: [
@@ -34,6 +35,9 @@ export default {
       if (!roomId) {
         roomId = this.generateNewRoomId();
       }
+      console.log("username: ", username)
+      console.log("roomId:  ", roomId)
+      this.username= username;
       socket.auth = { username, roomId };
       socket.connect();
       this.activeComp = "chat-window"

@@ -20,8 +20,8 @@ socket.on("connect", () => {
 });
 
 socket.on("room connected", (...args) => {
-  console.log(args)
-  state.roomId = args[0]
+  console.log("argd", args)
+  state.roomId = args[0].roomId
   state.connected = true;
   console.log("recieved connection event in room connected")
 });
@@ -37,5 +37,6 @@ socket.on("connect_error", (err) => {
 });
 
 socket.on("chat message", (...args) => {
+  console.log("args ",args[0])
   state.chatEvents.push(args[0]);
 });
