@@ -35,8 +35,6 @@ export default {
       if (!roomId) {
         roomId = this.generateNewRoomId();
       }
-      console.log("username: ", username)
-      console.log("roomId:  ", roomId)
       this.username= username;
       socket.auth = { username, roomId };
       socket.connect();
